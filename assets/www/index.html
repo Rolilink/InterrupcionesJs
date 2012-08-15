@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+		<link rel="stylesheet" href="assets/css/ui.css" />
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script src="cordova-1.9.0.js"></script>
+		<script type="text/javascript" src="assets/js/buckets-minified.js"></script>
+		<script type="text/javascript" src="assets/js/irq.js"></script>
+		<script type="text/javascript" src="assets/js/interrupcion.js"></script>
+		<script type="text/javascript" src="assets/js/tiempoadmin.js"></script>
+		<script type="text/javascript" src="assets/js/interrupcionadmin.js"></script>
+		<script type="text/javascript" src="assets/js/ListControl.js"></script>
+		<script type="text/javascript" src="assets/js/uijquery.js"></script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.tinysort.min.js"></script>
+	</head>	
+	<body>	
+		<div data-role="page" data-theme="custom" id="principal">
+			<div data-role="header" data-theme="custom-header" data-position="fixed" data-tap-toggle="false" class="button-bar">
+				<div class="top-bar">
+					<h1 class="amaranth">Interrupciones App</h1>
+				</div>
+				<div id="buttons" class="ui-grid-a">
+					<div class="ui-block-a txttocenter">
+						<a href="#" data-rel="dialog" data-role="button" data-theme="agregar" id="agregar">Agregar</a>
+					</div>
+					<div class="ui-block-b txttocenter">
+						<a href="#" data-role="button" data-theme="remover" id="remover">Remover</a>
+					</div>
+				</div>
+			</div>
+			<div data-role="content" class="nolist">	
+				<ul data-role="listview" data-theme="c" id="lista" >
+					<!--<li>
+						<p class="time">00:10</p>
+						<h1 class="tittle">Interrupcion 1</h1> 
+						<p>IRQ 04/Dispositivo: Impresora</p>
+					</li> -->
+				</ul>
+			</div>
+			<div data-role="footer" data-position="fixed" class="top-bar" data-tap-toggle="false" id="iniciar">
+				<h4 class="amaranth">Iniciar</h4>
+			</div>
+		</div>
+
+		<div data-role="dialog" id="dialogprograma" data-theme="custom-dialog">
+			<div data-role="content">
+				<div data-role="fieldcontain">
+					<label class="amaranth" for="prduracion">Duracion del Programa:</label>
+					<input type="number" name="prduracion" id="prduracion" value="" data-theme="c"></input>
+					<a href="#" id="dialoginiciar" data-rel="dialog" data-role="button" data-theme="agregar">Aceptar</a>
+				</div>
+			</div>
+		</div>				
+		<div data-role="page" id="procesospage">
+			<div data-role="header" data-tap-toggle ="false" class="top-bar" data-theme="custom" data-position="fixed">
+				<h1 class="amaranth">Interrupciones App</h1>
+			</div>
+			<div data-role="content" data-theme="none" class="procesoscontent">
+				<div id="contenedor" class="contenedorstyle">
+					<p>Interrupcion en Proceso:</p>
+					<p id="lcountdown">00:00</p>
+					<p id="ldispositivo">Reloj del Sistema</p>
+					<p id="lprioridad">1</p>
+					<p id="lduracion">00:12</p>
+				</div>
+			</div>
+
+			<div data-role="footer" data-tap-toggle ="false" data-position="fixed">
+				<div class="top-bar">
+					<h1 class="amaranth" id="globaltime">00:20</h1>
+				</div>
+			</div>
+			</div>
+			<div data-role="page" data-theme="custom" id="resultados">
+			<div data-role="header" data-tap-toggle ="false" class="top-bar" data-theme="custom" data-position="fixed">
+				<h1 class="amaranth">Resultados</h1>
+			</div>
+			<div data-role="content" class="nolist">	
+				<ul data-role="listview" data-theme="c" id="listaresultados" >
+					<!--<li>
+						 <p class="time">Tiempo:1-6</p>
+						<h1 class="tittle">Impresora</h1> 
+						<p class="description">Termino:No</p>
+					</li> -->
+				</ul>
+			</div>
+		</div>		
+						<!--Dialog Page-->
+		<div data-role="dialog" id="dialog" data-theme="custom-dialog">
+			<div data-role="content">
+				<H1 class="amaranth">Agregar una Interrupcion</H1>
+				<div data-role="fieldcontain">
+					<label class="amaranth" for="time">Tiempo Inicial:</label>
+					<input type="number" name="time" id="time" value="" data-theme="c"></input>
+				</div>
+				<div data-role="fieldcontain">
+					<label class="amaranth" for="duracion">Duracion:</label>
+					<input type="number" name="duracion" id="duracion" value="" data-theme="c"></input>
+				</div>
+				<div data-role="fieldcontain">
+					<label class="amaranth" for="dispositivo">Seleccione un Dispositivo:</label>
+					<select name="dispositivo" id="dispositivo" data-theme="b">
+						<option value='{"code":0}'>IRQ-0 Reloj del Sistema</option>
+						<option value='{"code":1}'>IRQ-1 Teclado</option>
+						<option value='{"code":3,"disp":2}'>IRQ-3 Com2</option>
+						<option value='{"code":3,"disp":4}'>IRQ-3 Com4</option>
+						<option value='{"code":4,"disp":1}'>IRQ-4 Com1</option>
+						<option value='{"code":4,"disp":3}'>IRQ-4 Com3</option>
+						<option value='{"code":6}'>IRQ-6 Floppy</option>
+						<option value='{"code":7}'>IRQ-7 Impresora</option>
+						<option value='{"code":8}'>IRQ-8 CMOS</option>
+						<option value='{"code":9,"disp":0}'>IRQ-9 Tarjeta de Red</option>
+						<option value='{"code":9,"disp":1}'>IRQ-9 Tarjeta de Sonido</option>
+						<option value='{"code":12}'>IRQ-12 Mouse</option>
+						<option value='{"code":13}'>IRQ-13 Co-Procesador Matematico</option>
+						<option value='{"code":14}'>IRQ-14 Disco</option>
+					</select>
+				</div>
+				<div class="ui-grid-a">
+					<div class="ui-block-a texttocenter">
+						<a href="#principal" id="dialogaceptar" data-rel="dialog" data-role="button" data-theme="agregar">Aceptar</a>
+					</div>
+					<div class="ui-block-b texttocenter">
+						<a href="#principal" id="dialogcancelar" data-role="button" data-theme="remover">Cancelar</a>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</body>
+</html>
